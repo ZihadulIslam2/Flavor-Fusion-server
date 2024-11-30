@@ -5,14 +5,13 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const FoodMenuRoutes = require("./src/routes/foodMenuRoutes")
 
-
+app.use(express.json())
 
 app.get('/', (req, res) => {
   res.send('Hello flavor fusion!')
 })
 
 // routes folder
-app.use(express.json())
 
 app.use('/api/Foods', FoodMenuRoutes)
 
