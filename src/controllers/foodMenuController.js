@@ -39,8 +39,38 @@ const addNewMenu = async (req,res)=>{
   }
 }
 
+// delete a menu
+// have to get the id from url
+// set delete mathod for delete by id.
+
+const deleteMenuItem = async (req, res) => {
+  try {
+    const { id } = req.params // Retrieve id from the route parameter
+    if (!id) {
+      return res
+        .status(400)
+        .send({ message: 'ID is required to delete an item' })
+    }
+
+    const deletedItem = await FoodMenu.findByIdAndDelete(id)
+
+    if (!deletedItem) {
+      return res.status(404).send({ message: 'Item not found' })
+    }
+
+    res
+      .status(200)
+      .send({ message: 'Item deleted successfully', item: deletedItem })
+  } catch (error) {
+    console.error('Failed to delete item.', error)
+    res.status(500).send({ message: 'Failed to delete item', error })
+  }
+}
+
+
 
 module.exports = {
   getAllFoodMenu,
   addNewMenu,
+  deleteMenuItem,
 }
